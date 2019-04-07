@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine
 
 RUN apk update && apk upgrade \
   && apk add g++ git \
@@ -7,9 +7,9 @@ RUN apk update && apk upgrade \
   \
   mkdir -p "/opt" && \
   cd "/opt" && \
-  git clone --depth 1 https://github.com/nim-lang/nim Nim && \
+  git clone -b master --depth 1 https://github.com/nim-lang/nim Nim && \
   cd Nim && \
-  git clone --depth 1 https://github.com/nim-lang/csources csources && \
+  git clone -b master --depth 1 https://github.com/nim-lang/csources csources && \
   cd csources && \
   sh build.sh && \
   cd .. &&\
@@ -19,5 +19,3 @@ RUN apk update && apk upgrade \
   ln -s "/opt/Nim/bin/nim" "/usr/local/bin/nim" && \
   \
   apk del build-dependencies
-
-COPY ./nim-update.sh /opt/nim-update.sh
